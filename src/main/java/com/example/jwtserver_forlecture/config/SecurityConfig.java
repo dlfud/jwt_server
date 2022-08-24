@@ -1,5 +1,6 @@
 package com.example.jwtserver_forlecture.config;
 
+import com.example.jwtserver_forlecture.filter.MyFilter3;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -7,6 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -14,9 +16,11 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig{
 
 
+
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
+                .addFilterBefore(new MyFilter3(), WebAsyncManagerIntegrationFilter.class)//SecurityContextPersistenceFilter.class 써야됨
                 .csrf().disable()
                 .cors()
                 .and()
@@ -36,4 +40,5 @@ public class SecurityConfig{
                 )
                 .build();
     }
+
 }
