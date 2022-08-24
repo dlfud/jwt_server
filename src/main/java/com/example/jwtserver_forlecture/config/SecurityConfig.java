@@ -8,7 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter;
+import org.springframework.security.web.context.SecurityContextHolderFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -20,7 +20,7 @@ public class SecurityConfig{
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
-                .addFilterBefore(new MyFilter3(), WebAsyncManagerIntegrationFilter.class)//SecurityContextPersistenceFilter.class 써야됨
+                .addFilterBefore(new MyFilter3(), SecurityContextHolderFilter.class)//SecurityContextPersistenceFilter.class 써야됨
                 .csrf().disable()
                 .cors()
                 .and()
