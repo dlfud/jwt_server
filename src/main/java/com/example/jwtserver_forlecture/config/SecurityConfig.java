@@ -18,6 +18,8 @@ public class SecurityConfig{
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf().disable()
+                .cors()
+                .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)//세션을 사용하지 않음
                 .and()
