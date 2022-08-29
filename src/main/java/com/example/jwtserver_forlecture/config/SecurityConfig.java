@@ -23,9 +23,8 @@ public class SecurityConfig{
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
-                .addFilterBefore(new MyFilter3(), SecurityContextHolderFilter.class)//SecurityContextPersistenceFilter.class 써야됨
+                //.addFilterBefore(new MyFilter3(), SecurityContextHolderFilter.class)//SecurityContextPersistenceFilter.class 써야됨
                 .csrf().disable()
-
                 .cors()
                 .and()
                 .sessionManagement()
