@@ -1,5 +1,7 @@
 package com.example.jwtserver_forlecture.config.jwt;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import com.example.jwtserver_forlecture.auth.PrincipalDetails;
 import com.example.jwtserver_forlecture.model.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,6 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
 
 
 // 스프링 시큐리티에서 UsernamePasswordAuthenticationFilter가 있음.
@@ -74,6 +77,16 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 //        msg.put("message", "인증 완료됨");
 //        ObjectMapper objectMapper = new ObjectMapper();
 //        objectMapper.writeValue(response.getOutputStream(), msg);
-        super.successfulAuthentication(request, response, chain, authResult);
+
+        PrincipalDetails principalDetails = (PrincipalDetails) authResult.getPrincipal();
+
+        String jwtToken = JWT.create()
+                .withSubject("login token")
+                .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME))
+                .withClaim("id", principalDetails.getUser().getId())
+                .withClaim("username", principalDetails.getUser().getUsername())
+                .sign(Algorithm.HMAC512(JwtProperties.SECRET));
+
+        response.addHeader("Authorization", JwtProperties.TOKEN_PREFIX + jwtToken);
     }
 }
