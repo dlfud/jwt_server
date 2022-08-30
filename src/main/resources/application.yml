@@ -10,9 +10,9 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/jwt-server_for-lecture?serverTimezone=Asia/Seoul
-    username: xanqus
-    password: 1234
+    url: jdbc:mysql://localhost:3306/jwt-server?serverTimezone=Asia/Seoul
+    username: sbsst
+    password: sbs123414
 
   jpa:
     hibernate:
